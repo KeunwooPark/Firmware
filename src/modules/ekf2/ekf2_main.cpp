@@ -284,6 +284,7 @@ private:
 	parameters *_params;	///< pointer to ekf parameter struct (located in _ekf class instance)
 
 	DEFINE_PARAMETERS(
+		(ParamExtInt<px4::params::EKF2_PERIOD>) _param_ekf2_period,
 		(ParamExtInt<px4::params::EKF2_MIN_OBS_DT>)
 		_param_ekf2_min_obs_dt,	///< Maximum time delay of any sensor used to increase buffer length to handle large timing jitter (mSec)
 		(ParamExtFloat<px4::params::EKF2_MAG_DELAY>)
@@ -537,6 +538,7 @@ Ekf2::Ekf2(bool replay_mode):
 	_replay_mode(replay_mode),
 	_ekf_update_perf(perf_alloc(PC_ELAPSED, MODULE_NAME": update")),
 	_params(_ekf.getParamHandle()),
+	_param_ekf2_period(_params->filter_update_period_us),
 	_param_ekf2_min_obs_dt(_params->sensor_interval_min_ms),
 	_param_ekf2_mag_delay(_params->mag_delay_ms),
 	_param_ekf2_baro_delay(_params->baro_delay_ms),
